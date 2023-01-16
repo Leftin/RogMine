@@ -19,18 +19,29 @@ def crafting(hero, tcraft):
         var = msvcrt.getch()
         if ord(var) == ord("2"):
             j += 1
-        if ord(var) == ord("8"):
+        elif ord(var) == ord("8"):
             j -= 1
-        if ord(var) == ord("5"):
-            for k in range(len(tcraft.craft[i])):
+        elif ord(var) == ord("5"):
+            counter = len(tcraft.craft[j])
+            for k in range(len(tcraft.craft[j])):
+                for a in range(len(hero.inventory)):
+                    if hero.inventory[a].id == tcraft.craft[j][k]:
+                        counter -= 1
+            if counter == 0:
+                for k in range(len(tcraft.craft[j])):
+                    for a in range(len(hero.inventory)):
+                        if hero.inventory[a].id == tcraft.craft[j][k]:
+                            hero.inventory[a].id = 0
+                        
                 for j in range(len(hero.inventory)):
-                    if hero.inventory[j].id == tcraft.craft[i][k]:
-                        hero.inventory[j].id = 0
+                    if hero.inventory[j].id == 0:
+                        hero.inventory[j].id = tcraft.result
                         break
-            for j in range(len(hero.inventory)):
-                if hero.inventory[j].id == 0:
-                    hero.inventory[j].id = tcraft.result
-                    break
+            else:
+                print("Need More Resourses!")
+                msvcrt.getch()
+            run = False
+        elif ord(var) == ord("x"):
             run = False
 
 def craft(hero):

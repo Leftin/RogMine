@@ -4,7 +4,7 @@ import DATA.map.map as m
 import DATA.hero.hero as h
 
 """
-RogMine Version 0.1 (build 1)
+RogMine Version 0.1 (build 2)
 """
 
 import msvcrt
