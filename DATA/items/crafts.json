@@ -1,0 +1,27 @@
+{
+    "crafts": [
+        {
+            "name": "Pickaxe",
+            "craft": [
+                [1, 2, 2]
+            ],
+            "result": 3
+        },  
+
+        {
+            "name": "Door",
+            "craft": [
+                [1]
+            ],
+            "result": 4
+        },
+        {
+            "name": "Wall",
+            "craft": [
+                [1],
+                [2]
+            ],
+            "result": 5
+        }
+    ]
+}

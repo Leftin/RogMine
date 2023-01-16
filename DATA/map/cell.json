@@ -1,0 +1,72 @@
+{
+    "id": [
+        {
+            "texture": " ",
+            "hitbox": false,
+            "name": "None",
+            "description": "literally nothing",
+            "strength": 0,
+            "use": false,
+            "drop": [
+                0
+            ]
+        },
+        {
+            "texture": "T",
+            "hitbox": true,
+            "name": "Tree",
+            "description": "You can get anything",
+            "strength": 0,
+            "use": false,
+            "drop": [
+                1
+            ]
+        },
+        {
+            "texture": "#",
+            "hitbox": true,
+            "name": "Stone",
+            "description": "Can only be mined with a pickaxe",
+            "strength": 1,
+            "use": false,
+            "drop": [
+                2
+            ]
+        },
+        {
+            "texture": "+",
+            "hitbox": true,
+            "name": "Door",
+            "description": "Can open",
+            "strength": 0,
+            "use": true,
+            "result_use": 4,
+            "drop": [
+                4
+            ]
+        },
+        {
+            "texture": "o",
+            "hitbox": false,
+            "name": "Open door",
+            "description": "Can close",
+            "strength": 0,
+            "use": true,
+            "result_use": 3,
+            "drop": [
+                4
+            ]
+        },
+        {
+            "texture": "w",
+            "hitbox": true,
+            "name": "Wall",
+            "description": "Just a wall, you can craft from any trash",
+            "strength": 0,
+            "use": false,
+            "drop": [
+                5
+            ]
+        }
+    ]
+}
