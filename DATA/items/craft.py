@@ -22,16 +22,18 @@ def crafting(hero, tcraft):
         elif ord(var) == ord("8"):
             j -= 1
         elif ord(var) == ord("5"):
-            counter = len(tcraft.craft[j])
+            counter = 0
             for k in range(len(tcraft.craft[j])):
                 for a in range(len(hero.inventory)):
                     if hero.inventory[a].id == tcraft.craft[j][k]:
-                        counter -= 1
-            if counter == 0:
+                        counter += 1
+                        break
+            if counter == len(tcraft.craft[j]):
                 for k in range(len(tcraft.craft[j])):
                     for a in range(len(hero.inventory)):
                         if hero.inventory[a].id == tcraft.craft[j][k]:
                             hero.inventory[a].id = 0
+                            break
                         
                 for j in range(len(hero.inventory)):
                     if hero.inventory[j].id == 0:
