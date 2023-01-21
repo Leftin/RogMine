@@ -3,17 +3,17 @@
         {
             "name": "Pickaxe",
             "craft": [
-                [1, 2, 2]
+                [1, 2, 2],
+                [1, 1, 1]
             ],
-            "result": 3
+            "result": [3]
         },  
-
         {
             "name": "Door",
             "craft": [
                 [1]
             ],
-            "result": 4
+            "result": [4]
         },
         {
             "name": "Wall",
@@ -21,7 +21,14 @@
                 [1],
                 [2]
             ],
-            "result": 5
+            "result": [5]
+        },
+        {
+        "name": "Home",
+        "craft": [
+            [3, 5, 5, 1]
+        ],
+        "result": [6]
         }
     ]
 }

@@ -4,7 +4,7 @@
             "texture": " ",
             "hitbox": false,
             "name": "None",
-            "description": "literally nothing",
+            "description": "Literally nothing",
             "strength": 0,
             "use": false,
             "drop": [
@@ -66,6 +66,17 @@
             "use": false,
             "drop": [
                 5
+            ]
+        },
+        {
+            "texture": "H",
+            "hitbox": true,
+            "name": "Home",
+            "description": "May I come in",
+            "strength": 1,
+            "use": true,
+            "drop": [
+                6
             ]
         }
     ]

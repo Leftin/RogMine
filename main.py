@@ -13,12 +13,13 @@ import random
 
 mapX = 10
 mapY = 10
+slots_inventory = 5
 
-hero = h.hero()
+hero = h.hero(slots_inventory)
 map = m.map(mapX, mapY)
 
 map.generation()
-hero.get_resourse([2, 2])
+hero.get_resourse([])
 
 while True: # main loop
     map.update() # update map

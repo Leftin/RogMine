@@ -33,6 +33,12 @@
             "strength": 0,
             "build": true,
             "result_build": 5
+        },
+        {
+            "name": "Home",
+            "strength": 0,
+            "build": true,
+            "result_build": 6
         }
         ]
 }

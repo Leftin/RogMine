@@ -2,16 +2,16 @@ import msvcrt
 import json
 from os import system
 import DATA.items.items as item
-import DATA.items.craft as craft
+import DATA.hero.craft as craft
 
 class hero():
-    def __init__(self):
+    def __init__(self, slots):
         self.texture = "☺"
         self.x = 5
         self.y = 5
         self.inventory = list()
-        self.slots = 5
-        self.strength = 1
+        self.slots = slots
+        self.strength = 0
         for i in range(self.slots):
             self.inventory.append(item.item())
     
@@ -31,62 +31,24 @@ class hero():
             xc += 1
         
         if ord(var) == ord("m"):
-            print("What block do you want to mine?")
-            var = msvcrt.getch()
-            if ord(var) == ord("8"):
-                yc -= 1
-            if ord(var) == ord("2"):
-                yc += 1
-            if ord(var) == ord("4"):
-                xc -= 1
-            if ord(var) == ord("6"):
-                xc += 1
-            
-            if map.board[yc][xc].strength <= self.strength:
-                map.board[yc][xc].id = 0
-                self.get_resourse(map.board[yc][xc].drop)
+            self.mine(map)
         if ord(var) == ord("i"):
             self.print_inv()
         if ord(var) == ord("x"):
-            run = True
-            while run:
-                system("cls")   
-                map.board[self.y][self.x].texture = self.texture
-                map.board[yc][xc].texture = "x"
-
-                map.write()
-                print(f"Name: {map.board[yc][xc].name}")
-                print(f"Description: {map.board[yc][xc].description}")
-                print(f"Id: {map.board[yc][xc].id}")
-                print(f"Hitbox: {map.board[yc][xc].hitbox}")
-                print(f"Strength: {map.board[yc][xc].strength}")
-                print(f"Drop: {map.board[yc][xc].drop}")
-                var = msvcrt.getch()
-
-                f = open("DATA\map\cell.json")
-                json_file = json.load(f)                
-                map.board[yc][xc].texture = json_file["id"][map.board[yc][xc].id].get("texture")
-
-                if ord(var) == ord("8"):
-                    yc -= 1
-                if ord(var) == ord("2"):
-                    yc += 1
-                if ord(var) == ord("4"):
-                    xc -= 1
-                if ord(var) == ord("6"):
-                    xc += 1
-                
-                if ord(var) == ord("x"):
-                    run = False
-                    xc = self.x
-                    yc = self.y
+            self.inspection(map)
         if ord(var) == ord("c"):
             craft.craft(self)
         if ord(var) == ord("b"):
             self.build(map)
         if ord(var) == ord("u"):
             self.use(map)
-            
+        if ord(var) == ord("t"):
+            self.take(map)
+        if ord(var) == ord("d"):
+            self.drop(map)
+        if ord(var) == ord("h"):
+            self.help()
+
         if map.board[yc][xc].hitbox == True:
                 xc = self.x
                 yc = self.y
@@ -100,7 +62,7 @@ class hero():
                 if self.inventory[j].id == 0:
                     self.inventory[j].id = resourse[i]
                     break
-    
+
     def update_inv(self):
         for i in range(len(self.inventory)):
             self.inventory[i].update()
@@ -112,8 +74,6 @@ class hero():
                 j = self.inventory[i].strength
         
         self.strength = j
-
-    
     def print_inv(self):
         run = True
         j = 0
@@ -135,7 +95,7 @@ class hero():
                 j -= 1
             if ord(var) == ord("x"):
                 run = False
-    
+
     def build(self, map):
             xc = self.x
             yc = self.y
@@ -160,11 +120,14 @@ class hero():
                             print(f"{i+1}. {self.inventory[i].name} <--")
                         else:
                             print(f"{i+1}. {self.inventory[i].name}")
+                    print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
                     var = msvcrt.getch()
                     if ord(var) == ord("2"):
                         j += 1
                     if ord(var) == ord("8"):
                         j -= 1
+                    elif ord(var) == ord("x"):
+                        run = False
                     if ord(var) == ord("5"):
                         if self.inventory[j].build == True:
                             map.board[yc][xc].id = self.inventory[j].result
@@ -173,8 +136,8 @@ class hero():
             else:
                 print("The place is busy!")
                 msvcrt.getch()
-    
     def use(self, map):
+
             xc = self.x
             yc = self.y
             print("what do you want to use?")
@@ -192,3 +155,136 @@ class hero():
             else:
                 print("This cell cannot be used")
                 msvcrt.getch()
+    def inspection(self, map):
+            xc = self.x
+            yc = self.y
+            run = True
+            while run:
+                system("cls")   
+                map.board[self.y][self.x].texture = self.texture
+                map.board[yc][xc].texture = "x"
+
+                map.write()
+                print(f"Name: {map.board[yc][xc].name}")
+                print(f"Description: {map.board[yc][xc].description}")
+                print(f"Id: {map.board[yc][xc].id}")
+                print(f"Hitbox: {map.board[yc][xc].hitbox}")
+                print(f"Strength: {map.board[yc][xc].strength}")
+                print(f"Drop: {map.board[yc][xc].drop}")
+                print("\nx - cancel")
+                var = msvcrt.getch()
+
+                f = open("DATA\map\cell.json")
+                json_file = json.load(f)                
+                map.board[yc][xc].texture = json_file["id"][map.board[yc][xc].id].get("texture")
+
+                if ord(var) == ord("8"):
+                    yc -= 1
+                if ord(var) == ord("2"):
+                    yc += 1
+                if ord(var) == ord("4"):
+                    xc -= 1
+                if ord(var) == ord("6"):
+                    xc += 1
+                
+                if ord(var) == ord("x"):
+                    run = False
+                    xc = self.x
+                    yc = self.y
+    def mine(self, map):
+            xc = self.x
+            yc = self.y
+            print("What block do you want to mine?")
+            var = msvcrt.getch()
+            if ord(var) == ord("8"):
+                yc -= 1
+            if ord(var) == ord("2"):
+                yc += 1
+            if ord(var) == ord("4"):
+                xc -= 1
+            if ord(var) == ord("6"):
+                xc += 1
+            
+            if map.board[yc][xc].strength <= self.strength:
+                map.board[yc][xc].id = 0
+                self.get_resourse(map.board[yc][xc].drop)        
+    def take(self, map):
+            xc = self.x
+            yc = self.y
+            print("On which cell do you want to take the item?")
+            var = msvcrt.getch()
+            if ord(var) == ord("8"):
+                yc -= 1
+            if ord(var) == ord("2"):
+                yc += 1
+            if ord(var) == ord("4"):
+                xc -= 1
+            if ord(var) == ord("6"):
+                xc += 1        
+
+            j=0
+            if map.board[yc][xc].hitbox == False:
+                run = True
+                while run:
+                    system("cls")
+                    for i in range(len(map.board[yc][xc].drop)):
+                        if i == j:
+                            print(f"{i}. {map.board[yc][xc].drop[i]} <--")
+                        else:
+                            print(f"{i}. {map.board[yc][xc].drop[i]}")
+                    print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
+                    var = msvcrt.getch()
+                    if ord(var) == ord("2"):
+                        j += 1
+                    elif ord(var) == ord("8"):
+                        j -= 1
+                    elif ord(var) == ord("x"):
+                        run = False    
+                    elif ord(var) == ord("5"):
+                        self.get_resourse([map.board[yc][xc].drop[j]])
+                        map.board[yc][xc].drop[j] = 0
+                        break
+    def drop(self, map):
+        xc = self.x
+        yc = self.y
+        print("On which cell do you want to take the item?")
+        var = msvcrt.getch()
+        if ord(var) == ord("8"):
+            yc -= 1
+        if ord(var) == ord("2"):
+            yc += 1
+        if ord(var) == ord("4"):
+            xc -= 1
+        if ord(var) == ord("6"):
+            xc += 1  
+        j = 0    
+        run = True
+        while run:
+            system("cls")
+            for i in range(len(self.inventory)):
+                if i == j:
+                    print(f"{i}. {self.inventory[i].name} <--")
+                else:
+                    print(f"{i}. {self.inventory[i].name}")
+            print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
+            var = msvcrt.getch()
+            if ord(var) == ord("2"):
+                j += 1
+            elif ord(var) == ord("8"):
+                j -= 1
+            elif ord(var) == ord("x"):
+                run = False
+            elif ord(var) == ord("5"):
+                map.board[yc][xc].drop.append(self.inventory[j].id)
+                self.inventory[j].id = 0
+                break
+    def help(self):
+        system("cls")
+        print("m - mine")
+        print("b - build")
+        print("c - craft")
+        print("u - use")
+        print("x - inspection")
+        print("d - drop")
+        print("t - take")
+        msvcrt.getch()

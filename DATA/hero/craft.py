@@ -16,12 +16,16 @@ def crafting(hero, tcraft):
                 print(f"{i}. {tcraft.craft[i]} <--")
             else:
                 print(f"{i}. {tcraft.craft[i]}")
+        print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
         var = msvcrt.getch()
         if ord(var) == ord("2"):
-            j += 1
+            if j < len(tcraft.craft):
+                j += 1
         elif ord(var) == ord("8"):
-            j -= 1
+            if j > 0:
+                j -= 1
         elif ord(var) == ord("5"):
+            # checking for resources
             counter = 0
             for k in range(len(tcraft.craft[j])):
                 for a in range(len(hero.inventory)):
@@ -29,16 +33,14 @@ def crafting(hero, tcraft):
                         counter += 1
                         break
             if counter == len(tcraft.craft[j]):
+                # deleting resources
                 for k in range(len(tcraft.craft[j])):
                     for a in range(len(hero.inventory)):
                         if hero.inventory[a].id == tcraft.craft[j][k]:
                             hero.inventory[a].id = 0
                             break
-                        
-                for j in range(len(hero.inventory)):
-                    if hero.inventory[j].id == 0:
-                        hero.inventory[j].id = tcraft.result
-                        break
+                # get resources
+                hero.get_resourse(tcraft.result)
             else:
                 print("Need More Resourses!")
                 msvcrt.getch()
@@ -49,11 +51,10 @@ def crafting(hero, tcraft):
 def craft(hero):
     f = open("DATA\items\crafts.json")
     json_file = json.load(f)
-
-
-
     run = True
     i = 0
+    fi = open("DATA\items\items.json")
+    json_filei = json.load(fi)    
     while run:
         system("cls")
         tcraft = class_craft()
@@ -61,24 +62,24 @@ def craft(hero):
         tcraft.craft = json_file["crafts"][i].get("craft")
         tcraft.result = json_file["crafts"][i].get("result")
         
-        f = open("DATA\items\items.json")
-        json_file = json.load(f)
+
 
         print(f"Name: {tcraft.name}")
         print("Crafts: ")
         for j in range(len(tcraft.craft)):
             print(f"{j}. ", end="")
             for k in range(len(tcraft.craft[j])):
-                print(json_file["id"][tcraft.craft[j][k]].get("name"), end=", ")
+                print(json_filei["id"][tcraft.craft[j][k]].get("name"), end=", ")
             print()
+        print("\n6 - next\n4 - back\n5 - ready\n\nx - cancel")
         var = msvcrt.getch()
         if ord(var) == ord("6"):
-            i += 1
+            if i < len(json_file["crafts"])-1:
+                i += 1
         if ord(var) == ord("4"):
-            i -= 1
+            if i > 0:
+                i -= 1
         if ord(var) == ord("x"):
             run = False   
         if ord(var) == ord("5"):
             crafting(hero, tcraft)
-        f = open("DATA\items\crafts.json")
-        json_file = json.load(f)
