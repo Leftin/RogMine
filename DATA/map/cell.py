@@ -1,5 +1,4 @@
 import json
-import random
 
 class cell():
     def __init__(self):
@@ -8,7 +7,6 @@ class cell():
         f = open("DATA\map\cell.json")
         json_file = json.load(f)
         self.drop = json_file["id"][self.id].get("drop")
-    
     def update(self):
         f = open("DATA\map\cell.json")
         json_file = json.load(f)
@@ -17,24 +15,25 @@ class cell():
         self.hitbox = json_file["id"][self.id].get("hitbox")
         self.name = json_file["id"][self.id].get("name")
         self.description = json_file["id"][self.id].get("description")
-        self.strength = json_file["id"][self.id].get("strength")
-        self.use = json_file["id"][self.id].get("use")
+        self.need_strength = json_file["id"][self.id].get("need_strength")
+        
 
-        if self.use == True:
+        if "result_use" in json_file["id"][self.id]:
             self.result_use = json_file["id"][self.id].get("result_use")
 
         drop_num = self.drop.count(0)
-        if drop_num >= 2:
+        if drop_num >= 1:
             for i in reversed(range(len(self.drop))):
-                if drop_num == 1:
+                if drop_num == 0:
                     break
                 if self.drop[i] == 0:
                     self.drop.pop(i)
                     drop_num -= 1
 
+        if len(self.drop) == 0:
+            self.drop.append(0)
+
         if self.idc != self.id:
             self.drop = json_file["id"][self.id].get("drop")
+            
         self.idc = self.id
-
-    def generation(self):
-        self.id = random.randint(0, 2)

@@ -5,8 +5,7 @@
             "hitbox": false,
             "name": "None",
             "description": "Literally nothing",
-            "strength": 0,
-            "use": false,
+            "need_strength": 0,
             "drop": [
                 0
             ]
@@ -16,8 +15,8 @@
             "hitbox": true,
             "name": "Tree",
             "description": "You can get anything",
-            "strength": 0,
-            "use": false,
+            "need_strength": 0,
+            "count": 20,
             "drop": [
                 1
             ]
@@ -27,8 +26,8 @@
             "hitbox": true,
             "name": "Stone",
             "description": "Can only be mined with a pickaxe",
-            "strength": 1,
-            "use": false,
+            "need_strength": 1,
+            "count": 15,
             "drop": [
                 2
             ]
@@ -38,8 +37,7 @@
             "hitbox": true,
             "name": "Door",
             "description": "Can open",
-            "strength": 0,
-            "use": true,
+            "need_strength": 0,
             "result_use": 4,
             "drop": [
                 4
@@ -50,8 +48,7 @@
             "hitbox": false,
             "name": "Open door",
             "description": "Can close",
-            "strength": 0,
-            "use": true,
+            "need_strength": 0,
             "result_use": 3,
             "drop": [
                 4
@@ -62,21 +59,9 @@
             "hitbox": true,
             "name": "Wall",
             "description": "Just a wall, you can craft from any trash",
-            "strength": 0,
-            "use": false,
+            "need_strength": 0,
             "drop": [
                 5
-            ]
-        },
-        {
-            "texture": "H",
-            "hitbox": true,
-            "name": "Home",
-            "description": "May I come in",
-            "strength": 1,
-            "use": true,
-            "drop": [
-                6
             ]
         }
     ]

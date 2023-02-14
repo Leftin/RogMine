@@ -48,6 +48,10 @@ class hero():
             self.drop(map)
         if ord(var) == ord("h"):
             self.help()
+        if ord(var) == ord("s"):
+            self.save(map)
+        if ord(var) == ord("l"):
+            self.load(map)
 
         if map.board[yc][xc].hitbox == True:
                 xc = self.x
@@ -150,7 +154,7 @@ class hero():
                 xc -= 1
             if ord(var) == ord("6"):
                 xc += 1
-            if map.board[yc][xc].use == True:
+            if hasattr(map.board[yc][xc], "result_use"):
                 map.board[yc][xc].id = map.board[yc][xc].result_use
             else:
                 print("This cell cannot be used")
@@ -169,7 +173,7 @@ class hero():
                 print(f"Description: {map.board[yc][xc].description}")
                 print(f"Id: {map.board[yc][xc].id}")
                 print(f"Hitbox: {map.board[yc][xc].hitbox}")
-                print(f"Strength: {map.board[yc][xc].strength}")
+                print(f"Need strength: {map.board[yc][xc].need_strength}")
                 print(f"Drop: {map.board[yc][xc].drop}")
                 print("\nx - cancel")
                 var = msvcrt.getch()
@@ -205,7 +209,7 @@ class hero():
             if ord(var) == ord("6"):
                 xc += 1
             
-            if map.board[yc][xc].strength <= self.strength:
+            if map.board[yc][xc].need_strength <= self.strength:
                 map.board[yc][xc].id = 0
                 self.get_resourse(map.board[yc][xc].drop)        
     def take(self, map):
@@ -287,4 +291,20 @@ class hero():
         print("x - inspection")
         print("d - drop")
         print("t - take")
+        print("s - save map")
+        print("l - load map")
         msvcrt.getch()
+    def save(self, map):
+        map.save()
+        f = open(f"DATA\saves\\{map.name}\hero.json", "w")
+        inventory_id = list()
+        for i in range(len(self.inventory)):
+            inventory_id.append(self.inventory[i].id)
+        json.dump(inventory_id, f)
+    def load(self, map):
+        a = map.load()
+        if a==1:
+            f = open(f"DATA\saves\\{map.name}\hero.json", "r")
+            load_inventory = json.load(f)
+            for i in range(len(self.inventory)):
+                self.inventory[i].id = load_inventory[i]

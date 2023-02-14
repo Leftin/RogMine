@@ -9,13 +9,18 @@ class class_craft():
 def crafting(hero, tcraft):
     run = True
     j = 0
+    fi = open("DATA\items\items.json")
+    json_filei = json.load(fi)
     while run:
         system("cls")
         for i in range(len(tcraft.craft)):
+            for k in range(len(tcraft.craft[j])):
+                print(json_filei["id"][tcraft.craft[i][k]].get("name"), end="")
+                if k!=len(tcraft.craft[j])-1:
+                    print(", ", end="")
             if i == j:
-                print(f"{i}. {tcraft.craft[i]} <--")
-            else:
-                print(f"{i}. {tcraft.craft[i]}")
+                print(f" <--", end="")
+            print()
         print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
         var = msvcrt.getch()
         if ord(var) == ord("2"):
@@ -67,9 +72,11 @@ def craft(hero):
         print(f"Name: {tcraft.name}")
         print("Crafts: ")
         for j in range(len(tcraft.craft)):
-            print(f"{j}. ", end="")
+            print(f"{j+1}. ", end="")
             for k in range(len(tcraft.craft[j])):
-                print(json_filei["id"][tcraft.craft[j][k]].get("name"), end=", ")
+                print(json_filei["id"][tcraft.craft[j][k]].get("name"), end="")
+                if k!=len(tcraft.craft[j])-1:
+                    print(", ", end="")
             print()
         print("\n6 - next\n4 - back\n5 - ready\n\nx - cancel")
         var = msvcrt.getch()
