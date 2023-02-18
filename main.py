@@ -29,7 +29,7 @@ world.generation()
 
 os.system("cls") # clear screen
 
-hero.get_resourse([2, 2, 2, 8]) # get start resourses hero
+hero.get_resourse([]) # get start resourses hero
 
 map.alert = "Press h to help" # start alert
 
