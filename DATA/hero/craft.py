@@ -6,7 +6,7 @@ class class_craft():
     def __init__(self):
         pass
 
-def crafting(hero, tcraft):
+def crafting(hero, tcraft, map):
     run = True
     j = 0
     fi = open("DATA\items\items.json")
@@ -14,9 +14,9 @@ def crafting(hero, tcraft):
     while run:
         system("cls")
         for i in range(len(tcraft.craft)):
-            for k in range(len(tcraft.craft[j])):
+            for k in range(len(tcraft.craft[i])):
                 print(json_filei["id"][tcraft.craft[i][k]].get("name"), end="")
-                if k!=len(tcraft.craft[j])-1:
+                if k!=len(tcraft.craft[i])-1:
                     print(", ", end="")
             if i == j:
                 print(f" <--", end="")
@@ -30,51 +30,75 @@ def crafting(hero, tcraft):
             if j > 0:
                 j -= 1
         elif ord(var) == ord("5"):
-            # checking for resources
+            # checking for workshop
             counter = 0
-            for k in range(len(tcraft.craft[j])):
-                for a in range(len(hero.inventory)):
-                    if hero.inventory[a].id == tcraft.craft[j][k]:
+            if hasattr(tcraft, "need"):
+                for k in range(len(tcraft.need)):
+                    if tcraft.need[k] in hero.id_near:
                         counter += 1
-                        break
-            if counter == len(tcraft.craft[j]):
-                # deleting resources
+            else:
+                counter = 1
+            if counter >= 1:
+                # checking for resources
+                counter = 0
                 for k in range(len(tcraft.craft[j])):
                     for a in range(len(hero.inventory)):
                         if hero.inventory[a].id == tcraft.craft[j][k]:
-                            hero.inventory[a].id = 0
+                            counter += 1
                             break
-                # get resources
-                hero.get_resourse(tcraft.result)
+                if counter == len(tcraft.craft[j]):
+                    # deleting resources
+                    for k in range(len(tcraft.craft[j])):
+                        for a in range(len(hero.inventory)):
+                            if hero.inventory[a].id == tcraft.craft[j][k]:
+                                hero.inventory[a].id = 0
+                                break
+                    # get resources
+                    hero.get_resourse(tcraft.result)
+                else:
+                    print("Need More Resourses!")
+                    msvcrt.getch()
+                run = False
             else:
-                print("Need More Resourses!")
+                print("Need a workshop")
                 msvcrt.getch()
-            run = False
         elif ord(var) == ord("x"):
             run = False
 
-def craft(hero):
+def craft(hero, map):
     f = open("DATA\items\crafts.json")
     json_file = json.load(f)
     run = True
     i = 0
-    fi = open("DATA\items\items.json")
-    json_filei = json.load(fi)    
+    f2 = open("DATA\items\items.json")
+    json_file2 = json.load(f2)    
+    f3 = open("DATA\map\cell.json")
+    json_file3 = json.load(f3)    
     while run:
         system("cls")
         tcraft = class_craft()
         tcraft.name = json_file["crafts"][i].get("name")
         tcraft.craft = json_file["crafts"][i].get("craft")
         tcraft.result = json_file["crafts"][i].get("result")
+        if "need" in json_file["crafts"][i]:
+            tcraft.need = json_file["crafts"][i].get("need")
         
 
 
         print(f"Name: {tcraft.name}")
+        if "need" in json_file["crafts"][i]:
+            print("Need: ", end="")
+            for j in range(len(tcraft.need)):
+                print(json_file3["id"][tcraft.need[j]].get("name"), end="")
+                if j!=len(tcraft.need)-1:
+                    print(", ", end="")
+            print()
+        
         print("Crafts: ")
         for j in range(len(tcraft.craft)):
             print(f"{j+1}. ", end="")
             for k in range(len(tcraft.craft[j])):
-                print(json_filei["id"][tcraft.craft[j][k]].get("name"), end="")
+                print(json_file2["id"][tcraft.craft[j][k]].get("name"), end="")
                 if k!=len(tcraft.craft[j])-1:
                     print(", ", end="")
             print()
@@ -89,4 +113,4 @@ def craft(hero):
         if ord(var) == ord("x"):
             run = False   
         if ord(var) == ord("5"):
-            crafting(hero, tcraft)
+            crafting(hero, tcraft, map)

@@ -12,4 +12,4 @@ class item():
         self.strength = json_file["id"][self.id].get("strength")
         self.build = json_file["id"][self.id].get("build")
         if self.build == True:
-            self.result = json_file["id"][self.id].get("result_build")
+            self.result_build = json_file["id"][self.id].get("result_build")

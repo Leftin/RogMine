@@ -27,7 +27,7 @@
             "name": "Stone",
             "description": "Can only be mined with a pickaxe",
             "need_strength": 1,
-            "count": 15,
+            "count": 20,
             "drop": [
                 2
             ]
@@ -63,6 +63,115 @@
             "drop": [
                 5
             ]
+        },
+        {
+            "texture": "H",
+            "hitbox": true,
+            "name": "Statue of love",
+            "description": "This statue fills you with love",
+            "need_strength": 0,
+            "drop": [
+                6
+            ]
+        },
+        {
+            "texture": "D",
+            "hitbox": true,
+            "name": "Statue of diamonds",
+            "description": "This statue makes you feel the fighting power",
+            "need_strength": 0,
+            "drop": [
+                6
+            ]
+        },
+        {
+            "texture": "C",
+            "hitbox": true,
+            "name": "Statue of clubs",
+            "description": "This statue makes you feel lucky",
+            "need_strength": 0,
+            "drop": [
+                6
+            ]
+        },
+        {
+            "texture": "S",
+            "hitbox": true,
+            "name": "Statue of spades",
+            "description": "This statue makes you feel mastery",
+            "need_strength": 0,
+            "drop": [
+                6
+            ]
+        },
+        {
+            "texture": "V",
+            "hitbox": true,
+            "name": "Drill machine",
+            "description": "Once every few moves we can get a stone from there",
+            "need_strength": 0,
+            "result_use": 10,
+            "drop": [
+                7
+            ]
+        },
+        {
+            "texture": "#",
+            "hitbox": true,
+            "name": "Stone",
+            "description": "Can only be mined with a pickaxe",
+            "need_strength": 1,
+            "drop": [
+                8,
+                8,
+                8
+            ]
+        },
+        {
+            "texture": "I",
+            "hitbox": true,
+            "name": "Iron",
+            "description": "Can be smelted into an ingot",
+            "need_strength": 1,
+            "count": 2,
+            "drop": [
+                9,
+                9
+            ]
+        },
+        {
+            "texture": "C",
+            "hitbox": true,
+            "name": "Coal",
+            "description": "Sometimes Santa Claus brings it",
+            "need_strength": 1,
+            "count": 1,
+            "drop": [
+                11,
+                11
+            ]
+        },
+        {
+            "texture": "Q",
+            "hitbox": true,
+            "name": "Workshop I tier",
+            "description": "The first workbench for true craftsmen",
+            "need_strength": 0,
+            "drop": [
+                12
+            ]
+        },
+        {
+            "texture": "g",
+            "hitbox": true,
+            "name": "Gold",
+            "description": "Helps in crafting vehicles",
+            "need_strength": 0,
+            "world_count": 20,
+            "drop": [
+                13
+            ]
         }
+        
     ]
 }

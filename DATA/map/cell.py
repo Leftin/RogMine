@@ -30,10 +30,21 @@ class cell():
                     self.drop.pop(i)
                     drop_num -= 1
 
+        if self.id == 0 and len(self.drop) >= 1 and self.drop[0] != 0:
+            self.texture = "."
+        if self.id == 0 and len(self.drop) >= 5 and self.drop[0] != 0:
+            self.texture = "/"
+        if self.id == 0 and len(self.drop) >= 10 and self.drop[0] != 0:
+            self.texture = "|"
+        if self.id == 0 and len(self.drop) >= 20 and self.drop[0] != 0:
+            self.texture = "\\"
+
         if len(self.drop) == 0:
             self.drop.append(0)
 
         if self.idc != self.id:
             self.drop = json_file["id"][self.id].get("drop")
+            if self.id == 10:
+                self.clock = 0
             
         self.idc = self.id
