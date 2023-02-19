@@ -4,9 +4,11 @@ import random
 from os import system
 import DATA.items.items as item
 import DATA.hero.craft as craft
+import DATA.map.map
 
 class hero():
     def __init__(self, slots):
+        self.mode = 2
         self.texture = "☺"
         self.worldx = 5
         self.worldy = 5
@@ -38,7 +40,7 @@ class hero():
         if ord(var) == ord("m"):
             self.mine(map)
         if ord(var) == ord("i"):
-            self.print_inv()
+            self.print_inv(world)
         if ord(var) == ord("x"):
             self.inspection(map)
         if ord(var) == ord("c"):
@@ -46,7 +48,7 @@ class hero():
         if ord(var) == ord("b"):
             self.build(map)
         if ord(var) == ord("u"):
-            self.use(map)
+            self.use(map, world)
         if ord(var) == ord("t"):
             self.take(map)
         if ord(var) == ord("d"):
@@ -54,13 +56,25 @@ class hero():
         if ord(var) == ord("h"):
             self.help()
         if ord(var) == ord("s"):
-            self.save(map)
+            self.save(world)
         if ord(var) == ord("l"):
-            self.load(map)
+            self.load(world)
         if ord(var) == ord("w"):
             self.world_move(world)
         if ord(var) == 27: # Esc
             self.pause(map)
+        if self.mode == 2:
+            if ord(var) == ord("g"):
+                self.give()
+
+        if xc > map.x-1:
+            xc = self.x
+        if xc < 0:
+            xc = self.x
+        if yc > map.y-1:
+            yc = self.y
+        if yc < 0:
+            yc = self.y
 
         if map.board[yc][xc].hitbox == True:
                 xc = self.x
@@ -88,9 +102,9 @@ class hero():
         for i in range(len(self.inventory)):
             if self.inventory[i].strength > j:
                 j = self.inventory[i].strength
-        
+
         self.strength = j
-    def print_inv(self):
+    def print_inv(self, world):
         run = True
         j = 0
         while run:
@@ -104,6 +118,8 @@ class hero():
             print("══════")
             print(f"Strength: {self.inventory[j].strength}")
             print(f"Build: {self.inventory[j].build}")
+            if self.inventory[j].id == 15:
+                print(f"Time: {world.clock}")
 
             var = msvcrt.getch()
             if ord(var) == ord("2"):
@@ -115,24 +131,24 @@ class hero():
 
     def update_idnear(self, map):
         self.id_near = list()
-        if self.x < map.x:
+        if self.x < map.x-1:
             self.id_near.append(map.board[self.y][self.x+1].id)
-            if self.y != 0:
+            if self.y > 0:
                 self.id_near.append(map.board[self.y-1][self.x+1].id)
-            if self.y != map.y:
+            if self.y < map.y-1:
                 self.id_near.append(map.board[self.y+1][self.x+1].id)
         if self.x > 0:
             self.id_near.append(map.board[self.y][self.x-1].id)
             if self.y > 0:
                 self.id_near.append(map.board[self.y-1][self.x-1].id)
-            if self.y < map.y:
+            if self.y < map.y-1:
                 self.id_near.append(map.board[self.y+1][self.x-1].id)
         if self.y > 0:
             self.id_near.append(map.board[self.y-1][self.x].id)
-        if self.y < map.y:
+        if self.y < map.y-1:
             self.id_near.append(map.board[self.y+1][self.x].id)
 
-    def build(self, map):
+    def build(self, map: object):
             xc = self.x
             yc = self.y
             print("Where do you want to put the cell?")
@@ -206,7 +222,7 @@ class hero():
 
             else:
                 map.alert = "The place is busy!"
-    def use(self, map):
+    def use(self, map: object, world: object):
 
             xc = self.x
             yc = self.y
@@ -224,18 +240,18 @@ class hero():
                 map.board[yc][xc].id = map.board[yc][xc].result_use
                 if map.board[yc][xc].id == 10:
                     blocks = [2, 8, 9, 11]
-                    if map.clock-map.board[yc][xc].clock >= 5:
+                    if world.clock-map.board[yc][xc].clock >= 5:
                         if self.cout_null_item <= 0:
                             map.alert = "Not enough space"
                         else:
                             self.get_resourse([random.choice(blocks)])
-                            map.board[yc][xc].clock = map.clock
+                            map.board[yc][xc].clock = world.clock
                     else:
                         map.alert = "The time has not come"
 
             else:
                 self.alert = "This cell cannot be used"
-    def inspection(self, map):
+    def inspection(self, map: object):
             xc = self.x
             yc = self.y
             run = True
@@ -269,11 +285,48 @@ class hero():
                 if ord(var) == ord("6"):
                     xc += 1
                 
+                if xc > map.x-1:
+                    xc -= 1
+                if xc < 0:
+                    xc += 1
+                if yc > map.y-1:
+                    yc -= 1
+                if yc < 0:
+                    yc += 1
+
                 if ord(var) == ord("x"):
                     run = False
                     xc = self.x
                     yc = self.y
-    def mine(self, map):
+                
+                if self.mode == 2:
+                    if ord(var) == ord("5"):
+                        f = open("DATA\map\cell.json", "r")
+                        json_file = json.load(f)
+                        blocks = json_file["id"]
+                        j = 0
+                        run2 = True
+                        while run2:
+                            system("cls")
+                            for i in range(len(blocks)):
+                                print(blocks[i]["name"], end="")
+                                if i == j:
+                                    print("<--", end="")
+                                print()
+                            print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
+                            var = msvcrt.getch()
+                            if ord(var) == ord("2"):
+                                j += 1
+                            elif ord(var) == ord("8"):
+                                j -= 1
+                            elif ord(var) == ord("x"):
+                                run2 = False    
+                            elif ord(var) == ord("5"):
+                                 map.board[yc][xc].id = j
+                                 run2 = False
+
+
+    def mine(self, map: object):
             xc = self.x
             yc = self.y
             print("What block do you want to mine?")
@@ -286,16 +339,21 @@ class hero():
                 xc -= 1
             if ord(var) == ord("6"):
                 xc += 1
-            
-            if map.board[yc][xc].need_strength <= self.strength:
-                if self.cout_null_item >= len(map.board[yc][xc].drop):
-                    map.board[yc][xc].id = 0
-                    self.get_resourse(map.board[yc][xc].drop)
+            if self.mode == 1:
+                if map.board[yc][xc].mine != False:
+                        if map.board[yc][xc].need_strength <= self.strength:
+                            if self.cout_null_item >= len(map.board[yc][xc].drop):
+                                map.board[yc][xc].id = 0
+                                self.get_resourse(map.board[yc][xc].drop)
+                            else:
+                                map.alert = "Not enough space"
+                        else:
+                            map.alert = "Need a more powerful tool"
                 else:
-                    map.alert = "Not enough space"
+                    map.alert = "This cell cannot be mined"
             else:
-                map.alert = "Need a more powerful tool"
-    def take(self, map):
+                map.board[yc][xc].id = 0
+    def take(self, map: object):
             xc = self.x
             yc = self.y
             print("On which cell do you want to take the item?")
@@ -335,7 +393,7 @@ class hero():
                         self.get_resourse([map.board[yc][xc].drop[j]])
                         map.board[yc][xc].drop[j] = 0
                         break
-    def drop(self, map):
+    def drop(self, map: object):
         xc = self.x
         yc = self.y
         print("On which cell do you want to take the item?")
@@ -383,23 +441,22 @@ class hero():
         print("l - load map")
         print("w - go around the world")
         msvcrt.getch()
-    def save(self, map):
-        map.save()
-        f = open(f"DATA\saves\\{map.name}\hero.json", "w")
+    def save(self, world: object):
+        world.save()
+        f = open(f"DATA\saves\\{world.name}\hero.json", "w")
         inventory_id = list()
         for i in range(len(self.inventory)):
             inventory_id.append(self.inventory[i].id)
         json.dump(inventory_id, f)
-    def load(self, map):
-        a = map.load()
-        if a==1:
-            f = open(f"DATA\saves\\{map.name}\hero.json", "r")
-            load_inventory = json.load(f)
-            for i in range(len(self.inventory)):
-                self.inventory[i].id = load_inventory[i]
-    def pause(self, map):
+    def load(self, world: object):
+        world.load()
+        f = open(f"DATA\saves\\{world.name}\hero.json", "r")
+        load_inventory = json.load(f)
+        for i in range(len(self.inventory)):
+            self.inventory[i].id = load_inventory[i]
+    def pause(self, map: object):
         map.pause()
-    def world_move(self, world):
+    def world_move(self, world: object):
         run = True
         while run:
             system("cls")
@@ -417,3 +474,30 @@ class hero():
                 self.worldx += 1
             if ord(var) == ord("x"):
                 run = False
+    def give(self):
+        f = open("DATA\items\items.json", "r")
+        json_file = json.load(f)
+        items = json_file["id"]
+        j = [0]
+        run = True
+        give = False
+        while run:
+            system("cls")
+            for i in range(len(items)):
+                print(items[i]["name"], end="")
+                if i == j[0]:
+                    print("<--", end="")
+                print()
+            print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
+            if give == True: print("Item give")
+            var = msvcrt.getch()
+            if give == True: give = False
+            if ord(var) == ord("2"):
+                j[0] += 1
+            elif ord(var) == ord("8"):
+                j[0] -= 1
+            elif ord(var) == ord("x"):
+                run = False
+            elif ord(var) == ord("5"):
+                self.get_resourse(j)
+                give = True

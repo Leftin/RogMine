@@ -6,7 +6,7 @@ class class_craft():
     def __init__(self):
         pass
 
-def crafting(hero, tcraft, map):
+def crafting(hero: object, tcraft: object):
     run = True
     j = 0
     fi = open("DATA\items\items.json")

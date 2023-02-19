@@ -16,7 +16,12 @@ class cell():
         self.name = json_file["id"][self.id].get("name")
         self.description = json_file["id"][self.id].get("description")
         self.need_strength = json_file["id"][self.id].get("need_strength")
+        self.mine = json_file["id"][self.id].get("mine")
         
+        if self.idc != self.id:
+            self.drop = json_file["id"][self.id].get("drop")
+            if self.id == 10:
+                self.clock = 0
 
         if "result_use" in json_file["id"][self.id]:
             self.result_use = json_file["id"][self.id].get("result_use")
@@ -42,9 +47,6 @@ class cell():
         if len(self.drop) == 0:
             self.drop.append(0)
 
-        if self.idc != self.id:
-            self.drop = json_file["id"][self.id].get("drop")
-            if self.id == 10:
-                self.clock = 0
+
             
         self.idc = self.id

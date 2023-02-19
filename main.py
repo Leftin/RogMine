@@ -8,10 +8,7 @@ import DATA.hero.hero as h
 RogMine Version 0.3 (build 6)
 """
 # import modules
-import json
-import msvcrt
 import os
-import random
 
 # game values
 mapX = 15
@@ -20,12 +17,10 @@ worldX = 10
 worldY = 10
 slots_inventory = 5
 
-print("Generate world...") # alert generation
-
 hero = h.hero(slots_inventory) # init hero
 world = m.world(worldX, worldY, mapX, mapY) # init map
 map = world.board[hero.worldy][hero.worldx] # init map
-world.generation()
+world.generation() # generate world
 
 os.system("cls") # clear screen
 
@@ -41,5 +36,5 @@ while True: # main loop
     map.board[hero.y][hero.x].texture = hero.texture # set player texture
     os.system("cls") # clear screen
     map.write() # write map
-    map.clock += 1 # clock +
+    world.clock += 1 # clock +
     hero.control(map, world) # control

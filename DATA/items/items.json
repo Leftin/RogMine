@@ -82,11 +82,24 @@
         },
         {
             "name": "Gold",
-            "strength": 1,
+            "strength": 0,
             "build": true,
             "result_build": [
                 15
             ]
+        },
+        {
+            "name": "Furnace",
+            "strength": 0,
+            "build": true,
+            "result_build": [
+                16
+            ]
+        },
+        {
+            "name": "Time detector",
+            "strength": 0,
+            "build": false
         }
         ]
 }

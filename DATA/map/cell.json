@@ -118,7 +118,7 @@
         {
             "texture": "#",
             "hitbox": true,
-            "name": "Stone",
+            "name": "Constructed stone",
             "description": "Can only be mined with a pickaxe",
             "need_strength": 1,
             "drop": [
@@ -171,7 +171,26 @@
             "drop": [
                 13
             ]
+        },
+        {
+            "texture": "e",
+            "hitbox": true,
+            "name": "Furnace",
+            "description": "Can smelt ores",
+            "need_strength": 0,
+            "drop": [
+                13
+            ]
+        },
+        {
+            "texture": "O",
+            "hitbox": true,
+            "name": "Portal of Time",
+            "world_count": 1,
+            "description": "Allows you to create temporary anomalies",
+            "mine": false,
+            "need_strength": 0,
+            "drop": []
         }
-        
     ]
 }
