@@ -9,6 +9,7 @@ import math
 
 class map():
     def __init__(self, mapX: int, mapY: int):
+        self.update_method = 1
         self.x = mapX
         self.y = mapY
         self.alert = ""
@@ -68,8 +69,6 @@ class map():
             for j in range(self.x):
                 self.board[i][j].id = load_map[k][0]
                 k += 1
-    def pause(self):
-        DATA.game.game.pause()
     def update_texture(self):
         textures = list()
         for i in range(self.y):

@@ -30,11 +30,13 @@ map.alert = "Press h to help" # start alert
 
 while True: # main loop
     map = world.board[hero.worldy][hero.worldx]
-    map.update() # update map
+    if hero.update_method == 2:world.update()
+    else: map.update() 
     hero.update_inv() # update hero inventory
     hero.update_idnear(map) # update id near hero
     map.board[hero.y][hero.x].texture = hero.texture # set player texture
     os.system("cls") # clear screen
     map.write() # write map
+    if hero.show_coordinates == True: print(f"WorldX: {hero.worldx}\nWorldY: {hero.worldy}\nX: {hero.x}\nY: {hero.y}")
     world.clock += 1 # clock +
     hero.control(map, world) # control

@@ -113,4 +113,4 @@ def craft(hero, map):
         if ord(var) == ord("x"):
             run = False   
         if ord(var) == ord("5"):
-            crafting(hero, tcraft, map)
+            crafting(hero, tcraft)

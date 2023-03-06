@@ -5,15 +5,19 @@ from os import system
 import DATA.items.items as item
 import DATA.hero.craft as craft
 import DATA.map.map
+import DATA.game.game as game
+import math
 
 class hero():
     def __init__(self, slots):
-        self.mode = 2
+        self.update_method = 1
+        self.mode = 1
         self.texture = "☺"
         self.worldx = 5
         self.worldy = 5
         self.x = 5
         self.y = 5
+        self.show_coordinates = True
         self.inventory = list()
         self.slots = slots
         self.id_near = [0, 0, 0, 0, 0, 0, 0, 0]
@@ -76,7 +80,7 @@ class hero():
         if yc < 0:
             yc = self.y
 
-        if map.board[yc][xc].hitbox == True:
+        if map.board[yc][xc].hitbox == True and self.mode != 2:
                 xc = self.x
                 yc = self.y
 
@@ -305,10 +309,11 @@ class hero():
                         json_file = json.load(f)
                         blocks = json_file["id"]
                         j = 0
+                        k = 0
                         run2 = True
                         while run2:
                             system("cls")
-                            for i in range(len(blocks)):
+                            for i in range(k, k+10):
                                 print(blocks[i]["name"], end="")
                                 if i == j:
                                     print("<--", end="")
@@ -324,6 +329,16 @@ class hero():
                             elif ord(var) == ord("5"):
                                  map.board[yc][xc].id = j
                                  run2 = False
+                            if j < k:
+                                if k > 0:
+                                    k -= 1
+                            if j > k+9 and k+10 <= len(blocks)-1:
+                                k += 1
+
+                            if j < 0:
+                                j += 1
+                            if j > len(blocks)-1:
+                                j -= 1
 
 
     def mine(self, map: object):
@@ -372,27 +387,58 @@ class hero():
                 run = True
                 f = open("DATA\items\items.json", "r")
                 json_file = json.load(f)
-                while run:
-                    system("cls")
-                    print("══════")
-                    for i in range(len(map.board[yc][xc].drop)):
-                        if i == j:
-                            print(str(i+1) + "." + json_file["id"][map.board[yc][xc].drop[i]].get("name") + "<--")
-                        else:
-                            print(str(i+1) + "." + json_file["id"][map.board[yc][xc].drop[i]].get("name"))
-                    print("══════")
-                    print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
-                    var = msvcrt.getch()
-                    if ord(var) == ord("2"):
-                        j += 1
-                    elif ord(var) == ord("8"):
-                        j -= 1
-                    elif ord(var) == ord("x"):
-                        run = False    
-                    elif ord(var) == ord("5"):
-                        self.get_resourse([map.board[yc][xc].drop[j]])
-                        map.board[yc][xc].drop[j] = 0
-                        break
+                if len(map.board[yc][xc].drop) > 10:
+                    k = 0
+                    while run:
+                        system("cls")
+                        print("══════")
+                        for i in range(k, k+10):
+                            if i == j:
+                                print(str(i+1) + "." + json_file["id"][map.board[yc][xc].drop[i]].get("name") + "<--")
+                            else:
+                                print(str(i+1) + "." + json_file["id"][map.board[yc][xc].drop[i]].get("name"))
+                        print("══════")
+                        print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
+                        var = msvcrt.getch()
+                        if ord(var) == ord("2"):
+                            j += 1
+                        elif ord(var) == ord("8"):
+                            j -= 1
+                        elif ord(var) == ord("x"):
+                            run = False    
+                        elif ord(var) == ord("5"):
+                            self.get_resourse([map.board[yc][xc].drop[j]])
+                            map.board[yc][xc].drop[j] = 0
+                            break
+
+                        if j < k:
+                            if k > 0:
+                                k -= 1
+                        if j > k+9 and k+10 <= len(map.board[yc][xc].drop)-1:
+                            k += 1
+                else:
+                    while run:
+                        system("cls")
+                        print("══════")
+                        for i in range(len(map.board[yc][xc].drop)):
+                            if i == j:
+                                print(str(i+1) + "." + json_file["id"][map.board[yc][xc].drop[i]].get("name") + "<--")
+                            else:
+                                print(str(i+1) + "." + json_file["id"][map.board[yc][xc].drop[i]].get("name"))
+                        print("══════")
+                        print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
+                        var = msvcrt.getch()
+                        if ord(var) == ord("2"):
+                            j += 1
+                        elif ord(var) == ord("8"):
+                            j -= 1
+                        elif ord(var) == ord("x"):
+                            run = False    
+                        elif ord(var) == ord("5"):
+                            self.get_resourse([map.board[yc][xc].drop[j]])
+                            map.board[yc][xc].drop[j] = 0
+                            break
+
     def drop(self, map: object):
         xc = self.x
         yc = self.y
@@ -455,13 +501,14 @@ class hero():
         for i in range(len(self.inventory)):
             self.inventory[i].id = load_inventory[i]
     def pause(self, map: object):
-        map.pause()
+        game.pause(self)
     def world_move(self, world: object):
         run = True
         while run:
             system("cls")
             world.board[self.worldy][self.worldx].texture = "☺"
             world.write()
+            if self.show_coordinates == True: print(f"WorldX: {self.worldx}\nWorldY: {self.worldy}")
             world.board[self.worldy][self.worldx].update_texture()
             var = msvcrt.getch()
             if ord(var) == ord("8"):
@@ -472,23 +519,45 @@ class hero():
                 self.worldx -= 1
             if ord(var) == ord("6"):
                 self.worldx += 1
+
+            if self.worldx > world.x-1:
+                self.worldx -= 1
+            if self.worldx < 0:
+                self.worldx += 1
+            if self.worldy > world.y-1:
+                self.worldy -= 1
+            if self.worldy < 0:
+                self.worldy += 1
+
             if ord(var) == ord("x"):
+                self.x = math.floor(world.board[self.worldy][self.worldx].x/2)
+                self.y = math.floor(world.board[self.worldy][self.worldx].y/2)                
                 run = False
     def give(self):
         f = open("DATA\items\items.json", "r")
         json_file = json.load(f)
         items = json_file["id"]
         j = [0]
+        k = 0
         run = True
         give = False
+        space_num = 30  
         while run:
             system("cls")
-            for i in range(len(items)):
+            for i in range(k, k+10):
                 print(items[i]["name"], end="")
                 if i == j[0]:
                     print("<--", end="")
+                if i == math.floor(k+10/2):
+                    space = space_num-len(items[i]["name"])-len("<--")
+                    if i != j[0]:
+                        space += len("<--")
+                    for d in range(space):
+                        print(" ", end="")
+                    print("↕", end="")
                 print()
             print("\n2 - next\n8 - back\n5 - ready\n\nx - cancel")
+            print(space)
             if give == True: print("Item give")
             var = msvcrt.getch()
             if give == True: give = False
@@ -501,3 +570,14 @@ class hero():
             elif ord(var) == ord("5"):
                 self.get_resourse(j)
                 give = True
+            
+            if j[0] < k:
+                if k > 0:
+                    k -= 1
+            if j[0] > k+9 and k+10 <= len(items)-1:
+                k += 1
+
+            if j[0] < 0:
+                j[0] += 1
+            if j[0] > len(items)-1:
+                j[0] -= 1
