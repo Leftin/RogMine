@@ -1,0 +1,24 @@
+true=Да
+false=Нет
+
+about.hitbox=Твёрдый? 
+about.health=Здоровье: 
+about.conductivity=Проводимость тока:\n
+about.drop=Добыча: 
+about.breakDamageBy=Ломается от: 
+about.you=Это ты
+
+cell.air.name=Воздух
+cell.air.description=Для чего он тебе?\nРоботы не дышут
+
+cell.tree.name=Дерево
+cell.tree.description=Этому типу\nдеревьев ещё нe\nдали имени
+
+item.tree.name=Дерево
+item.tree.description=Постарайся не подцепить занозу
+
+item.stone.name=Камень
+item.stone.description=Может соберёшь из них коллекцию
+
+material.0=Ничего
+material.1=Деревянный\nинструмент

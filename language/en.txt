@@ -1,0 +1,26 @@
+/ Sorry for bad English, I use google translate
+
+true=Yes
+false=No
+
+about.hitbox=Hitbox? 
+about.health=Health: 
+about.conductivity=Current\nconductivity:\n
+about.drop=Mine: 
+about.breakDamageBy=Breaks from: 
+about.you=It's you
+
+cell.air.name=Air
+cell.air.description=What do you need\nit for? Robots\ndon't breathe
+
+cell.tree.name=Tree
+cell.tree.description=This type of tree\nhasn't been given\na name yet
+
+item.tree.name=Tree
+item.tree.description=Try not to get a splinter
+
+item.stone.name=Stone
+item.stone.description=Maybe you'll make a collection of them
+
+material.0=Nothing
+material.1=Wooden tool

@@ -1,0 +1,21 @@
+wight=50
+height=50
+cell.air=0,0
+cell.tree=1,0
+/cell - undefined sprite
+cell=2,0
+cell.anvil=3,0
+
+cell.stone=0,1
+cell.tree.above=1,1
+cell.wall.tree.above=1,1
+hero=2,1
+
+cell.spawn.0Life=3,1
+cell.spawn.1Life=4,2
+cell.spawn.2Life=3,2
+cell.spawn.3Life=2,2
+cell.spawn.noPower=4,1
+
+cell.furnace=0,2
+cell.solapPanel=1,2
