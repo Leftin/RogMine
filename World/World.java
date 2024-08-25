@@ -2,31 +2,31 @@ package World;
 
 public class World {
     private Island[][] board;
-    private int wight;
+    private int width;
     private int height;
-    private int wightIsland;
+    private int widthIsland;
     private int heightIsland;
 
-    public World(int wight, int height, int wightIsland, int heightIsland, int lenghtIsland) {
-        if(wight > 32) wight = 32;
+    public World(int width, int height, int widthIsland, int heightIsland, int lengthIsland) {
+        if(width > 32) width = 32;
         if(height > 32) height = 32;
-        if(wightIsland > 255) wightIsland = 255;
+        if(widthIsland > 255) widthIsland = 255;
         if(heightIsland > 255) heightIsland = 255;
-        if(lenghtIsland > 255) lenghtIsland = 255;
+        if(lengthIsland > 255) lengthIsland = 255;
 
-        board = new Island[height][wight];
+        board = new Island[height][width];
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < wight; j++) {
-                board[i][j] = new Island(wightIsland, heightIsland, lenghtIsland);
+            for (int j = 0; j < width; j++) {
+                board[i][j] = new Island(widthIsland, heightIsland, lengthIsland);
             }
         }
-        this.wight = wight;
+        this.width = width;
         this.height = height;
     }
 
     public void update() {
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < wight; j++) {
+            for (int j = 0; j < width; j++) {
 
             }
         }
@@ -35,8 +35,8 @@ public class World {
     public Island[][] getBoard() {
         return board;
     }
-    public int getWight() {
-        return wight;
+    public int getwidth() {
+        return width;
     }
     public int getHeight() {
         return height;

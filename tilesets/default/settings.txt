@@ -1,4 +1,4 @@
-wight=50
+width=50
 height=50
 cell.air=0,0
 cell.tree=1,0

@@ -45,17 +45,17 @@ public class Render extends JPanel {
     protected void paintBoard(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         int boardHeight = bufferedBoard.getBoardOnPlayerY().length;
-        int boardWight = bufferedBoard.getBoardOnPlayerY()[0].length;
+        int boardwidth = bufferedBoard.getBoardOnPlayerY()[0].length;
         if(boardHeight > ((int) this.getSize().height/tileset.getHeightOfSprite()+1)) boardHeight = (int) this.getSize().height/tileset.getHeightOfSprite()+1;
-        if(boardWight > ((int) this.getSize().width/tileset.getHeightOfSprite()+1)) boardWight = (int) this.getSize().width/tileset.getWightOfSprite()+1;
+        if(boardwidth > ((int) this.getSize().width/tileset.getHeightOfSprite()+1)) boardwidth = (int) this.getSize().width/tileset.getwidthOfSprite()+1;
 
         for (int i = 0; i < boardHeight; i++) {
-            for (int j = 0; j < boardWight; j++) {
-                g2.drawImage(tileset.getSprite(bufferedBoard.getTexturesUnderPlayer()[i][j]), null, 120+j*tileset.getWightOfSprite(), i*tileset.getHeightOfSprite());
-                g2.drawImage(tileset.getSprite(bufferedBoard.getBoardOnPlayerY()[i][j].getSpriteName()), null, 120+j*tileset.getWightOfSprite(), i*tileset.getHeightOfSprite());
+            for (int j = 0; j < boardwidth; j++) {
+                g2.drawImage(tileset.getSprite(bufferedBoard.getTexturesUnderPlayer()[i][j]), null, 120+j*tileset.getwidthOfSprite(), i*tileset.getHeightOfSprite());
+                g2.drawImage(tileset.getSprite(bufferedBoard.getBoardOnPlayerY()[i][j].getSpriteName()), null, 120+j*tileset.getwidthOfSprite(), i*tileset.getHeightOfSprite());
             }
         }
-        g2.drawImage(tileset.getSprite("hero"), null, 120+bufferedBoard.getX()*tileset.getWightOfSprite(), bufferedBoard.getZ()*tileset.getHeightOfSprite());
+        g2.drawImage(tileset.getSprite("hero"), null, 120+bufferedBoard.getX()*tileset.getwidthOfSprite(), bufferedBoard.getZ()*tileset.getHeightOfSprite());
 
     }
 
@@ -112,7 +112,7 @@ public class Render extends JPanel {
                 cursorY=-1;
             } else {
                 cursorX = (int) (e.getX()-120) / tileset.getHeightOfSprite();
-                cursorY = (int) e.getY() / tileset.getWightOfSprite();
+                cursorY = (int) e.getY() / tileset.getwidthOfSprite();
             }
             repaint();
         }

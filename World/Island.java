@@ -5,19 +5,19 @@ import java.util.Random;
 public class Island {
     private Random random = new Random();
     private Cell[][][] board;
-    private int wight;
+    private int width;
     private int height;
-    private int lenght;
+    private int length;
 
-    Island(int wight, int height, int lenght) {
-        this.wight = wight;
+    Island(int width, int height, int length) {
+        this.width = width;
         this.height = height;
-        this.lenght = lenght;
-        board = new Cell[height][lenght][wight];
+        this.length = length;
+        board = new Cell[height][length][width];
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < lenght; j++) {
-                for (int k = 0; k < wight; k++) {
-                    board[i][j][k] = CellFactory.createCellFromId(random.nextInt(2), k, i, j);
+            for (int j = 0; j < length; j++) {
+                for (int k = 0; k < width; k++) {
+                    board[i][j][k] = CellFactory.createCellFromId(i==1 ? 1 : 0, k, i, j);
                 }
             }
         }
@@ -27,8 +27,8 @@ public class Island {
 
     }
 
-    public int getLenght() { return lenght; }
-    public int getWight() { return wight; }
+    public int getlength() { return length; }
+    public int getwidth() { return width; }
     public int getHeight() { return height; }
     public Cell[][][] getBoard() { return board; }
 

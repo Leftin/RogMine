@@ -38,8 +38,8 @@ public class Tileset {
 
         String nameOfSpriteOriginally = nameOfSprite;
 
-        // wight and height dont be a sprite, this is settings
-        if((nameOfSprite.equals("wight")) || (nameOfSprite.equals("height")))
+        // width and height dont be a sprite, this is settings
+        if((nameOfSprite.equals("width")) || (nameOfSprite.equals("height")))
             throw new RuntimeException("Incorrect sprite name");
 
         // If dont have sprite go to parent and again
@@ -56,12 +56,12 @@ public class Tileset {
 
         int x = Integer.valueOf(tilesetsValues.get(nameOfSprite).split(",")[0]);
         int y = Integer.valueOf(tilesetsValues.get(nameOfSprite).split(",")[1]);
-        int wight = Integer.valueOf(tilesetsValues.get("wight"));
+        int width = Integer.valueOf(tilesetsValues.get("width"));
         int height = Integer.valueOf(tilesetsValues.get("height"));
 
         // Crop image and add to cache
         try {
-            BufferedImage sprite = ImageIO.read(tilesetImage).getSubimage(x*wight, y*height, wight, height);
+            BufferedImage sprite = ImageIO.read(tilesetImage).getSubimage(x*width, y*height, width, height);
             cache.put(nameOfSpriteOriginally, sprite);
             System.out.println("New position in cache: " + nameOfSpriteOriginally);
             return sprite;
@@ -70,7 +70,7 @@ public class Tileset {
         }
     }
 
-    public int getWightOfSprite() { return Integer.valueOf(tilesetsValues.get("wight")); }
+    public int getwidthOfSprite() { return Integer.valueOf(tilesetsValues.get("width")); }
     public int getHeightOfSprite() { return Integer.valueOf(tilesetsValues.get("height")); }
 
 }

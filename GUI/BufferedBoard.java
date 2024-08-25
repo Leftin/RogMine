@@ -17,11 +17,11 @@ public class BufferedBoard {
     }
 
     public static BufferedBoard BufferedBoardFromIsland(Island island, int x, int y, int z) {
-        String[][] texturesUnderPlayer = new String[island.getLenght()][island.getWight()];
+        String[][] texturesUnderPlayer = new String[island.getlength()][island.getwidth()];
         if(island.getHeight() == y) texturesUnderPlayer = new String[][]{};
         else {
-            for (int i = 0; i < island.getLenght(); i++) {
-                for (int j = 0; j < island.getWight(); j++) {
+            for (int i = 0; i < island.getlength(); i++) {
+                for (int j = 0; j < island.getwidth(); j++) {
                     texturesUnderPlayer[i][j] = island.getBoard()[y + 1][i][j].getSpriteName() + ".above";
                 }
             }
